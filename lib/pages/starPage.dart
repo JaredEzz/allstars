@@ -2,12 +2,12 @@ import 'package:allstars/model/star.dart';
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
-class HomePage extends StatefulWidget {
+class StarPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _StarPageState createState() => _StarPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _StarPageState extends State<StarPage> {
   ScrollController scrollController;
 
   @override
@@ -18,34 +18,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List stars = PowerStar.powerStars;
-    List gridTiles = map(stars, (index, Star s){
+    List<Widget> gridTiles = map(stars, (index, Star s) {
+      Color backgroundColor = Colors.green;
       return Padding(
         padding: EdgeInsets.all(4.0),
         child: Container(
             child: GridTile(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 80,
-                      width: 80,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                      ),
-                    )
-                  ],
-                )
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  color: backgroundColor,
+                  child: Stack(
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints.expand(),
+                        child: Container(),
+                      )
+                    ],
+                  )),
             )
-        ),
+          ],
+        ))),
       );
     });
     return DraggableScrollbar.semicircle(
       alwaysVisibleScrollThumb: true,
       controller: scrollController,
       child: GridView.count(
-        crossAxisCount: 5,
+        crossAxisCount: 4,
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
         children: gridTiles,
